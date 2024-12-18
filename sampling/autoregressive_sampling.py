@@ -3,6 +3,7 @@ import torch
 from tqdm import tqdm
 from sampling.utils import norm_logits, sample
 
+# output = autoregressive_sampling(input_ids, small_model, num_tokens, top_k = top_k, top_p=top_p)
 @torch.no_grad()
 def autoregressive_sampling(x : torch.Tensor, model : torch.nn.Module, N : int, 
                             temperature : float = 1, top_k : int = 0, top_p : float = 0):

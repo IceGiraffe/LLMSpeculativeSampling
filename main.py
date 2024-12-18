@@ -13,25 +13,23 @@ from globals import Decoder
 
 # my local models
 MODELZOO = {
-    # llama-1
-    # https://huggingface.co/PY007/TinyLlama-1.1B-step-50K-105b
-    "llama1b": "/share_nfs/fangjiarui/root/code/hf_models/TinyLlama-1.1B-step-50K-105b",
-    "llama7b": "/share_nfs/tianzhi/code/llama-7b",
-    "llama30b": "/share_nfs/fangjiarui/root/code/hf_models/llama-30b-hf",
-    "llama2-7b" : "/share_nfs/fangjiarui/root/code/hf_models/llama-2-7b-hf",
-    "llama2-70b" : "/share_nfs/fangjiarui/root/code/hf_models/llama-2-70b-hf",
-    "bloom-560m": "/share_nfs/fangjiarui/root/code/hf_models/bloom-560m",
-    "bloom7b": "/share_nfs/fangjiarui/root/code/hf_models/bloomz-7b1",
-    "baichuan-7b": "/share_nfs/duanqiyuan/models/source_models/hf/baichuan-7B",
-    "baichuan-13b": "/share_nfs/duanqiyuan/models/source_models/hf/Baichuan-13B-Base",
+    # "llama1b": "/share_nfs/fangjiarui/root/code/hf_models/TinyLlama-1.1B-step-50K-105b",
+    # "llama7b": "/share_nfs/tianzhi/code/llama-7b",
+    # "llama30b": "/share_nfs/fangjiarui/root/code/hf_models/llama-30b-hf",
+    # "llama2-7b" : "/share_nfs/fangjiarui/root/code/hf_models/llama-2-7b-hf",
+    # "llama2-70b" : "/share_nfs/fangjiarui/root/code/hf_models/llama-2-70b-hf",
+    "bloom-560m": "/root/autodl-tmp/huggingface/hub/bloom-560m",
+    "bloom7b": "/root/autodl-tmp/huggingface/hub/bloomz-7b1",
+    # "baichuan-7b": "/share_nfs/duanqiyuan/models/source_models/hf/baichuan-7B",
+    # "baichuan-13b": "/share_nfs/duanqiyuan/models/source_models/hf/Baichuan-13B-Base",
 }
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='args for main.py')
 
     parser.add_argument('--input', type=str, default="Any recommendations for my holidays in Abu Dhabi?")
-    parser.add_argument('--approx_model_name', type=str, default=MODELZOO["llama2-7b"])
-    parser.add_argument('--target_model_name', type=str, default=MODELZOO["llama2-70b"])
+    parser.add_argument('--approx_model_name', type=str, default=MODELZOO["bloom-560m"])
+    parser.add_argument('--target_model_name', type=str, default=MODELZOO["bloom7b"])
     parser.add_argument('--verbose', '-v', action='store_true', default=False, help='enable verbose mode')
     parser.add_argument('--seed', '-s', type=int, default=None, help='set a random seed, which can makes the result reproducible')
     parser.add_argument('--benchmark', '-b', action='store_true', default=False, help='show benchmark results.')
@@ -91,6 +89,8 @@ def generate(input_text, approx_model_name, target_model_name, num_tokens=20, ga
     
     input_ids = tokenizer.encode(input_text, return_tensors='pt').to(torch_device)
 
+    print(f"input_ids: {input_ids}")
+    
     top_k = 20
     top_p = 0.9
 
